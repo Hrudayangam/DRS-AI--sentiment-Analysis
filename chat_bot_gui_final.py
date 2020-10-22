@@ -61,7 +61,10 @@ def send():
     
         res = chatbot_response(msg)
         ChatLog.insert(END, "DRS-AI: " + res + '\n\n')
-           
+        
+        
+        ChatLog.insert(END, "DRS-AI: " + "Please enter what you want to analyse:" + '\n\n')
+        
         ChatLog.config(state=DISABLED)
         ChatLog.yview(END)
         

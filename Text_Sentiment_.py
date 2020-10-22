@@ -73,7 +73,7 @@ class BagOfWordsClassifier(nn.Module):
 
 
 model = BagOfWordsClassifier(len(dataset.token2idx), 128, 64)
-model
+#model
 
 criterion = nn.BCEWithLogitsLoss()
 optimizer = optim.Adam([p for p in model.parameters() if p.requires_grad], lr=0.001)
@@ -81,12 +81,12 @@ optimizer = optim.Adam([p for p in model.parameters() if p.requires_grad], lr=0.
 
 model.train()
 train_losses = []
-for epoch in range(100):
+for epoch in range(20):
     progress_bar = tqdm_notebook(train_loader, leave=False)
     losses = []
     total = 0
     for inputs, target in progress_bar:
-        model.zero_grad()
+        model.zero_grad() 
 
         output = model(inputs)
         loss = criterion(output.squeeze(), target.float())
@@ -116,14 +116,14 @@ def predict_review(text):
         test_vector = torch.LongTensor(dataset.vectorizer.transform([text]).toarray())
 
         output = model(test_vector)
-        prediction = torch.sigmoid(output).item()
-
+        prediction1 = torch.sigmoid(output).item()
+        prediction = round(prediction1,3)
         if prediction > 0.5:
-            #print("the final result is:")
-            return (' Positive Review')
+            
+            return ((str(prediction))+ "=> Positive Review")
         else:
-            #print("the final result is:")
-            return(" Negative Review")
+        
+            return ((str(prediction)) + " => Negative Review")
 
 #text='good movie'
 #predict_review(text)
